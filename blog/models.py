@@ -9,5 +9,5 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=True) #글 작성 유저
 
-    def __str__(self): #포스의 제목 결정
+    def __str__(self): #포스터의 제목 결정
         return '{} :: {}'.format(self.title, self.author)
