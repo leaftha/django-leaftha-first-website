@@ -8,3 +8,6 @@ class Post(models.Model):
     created= models.DateTimeField() #글 작성 시간
 
     author = models.ForeignKey(User, on_delete=True) #글 작성 유저
+
+    def __str__(self): #포스의 제목 결정
+        return '{} :: {}'.format(self.title, self.author)
