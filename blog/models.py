@@ -1,3 +1,10 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
+class Post(models.Model):
+    title = models.CharField(max_length=30) #제목 표시 글자수 제한 30글자
+    content = models.TextField() #글 내용
+
+    created= models.DateTimeField() #글 작성 시간
+
+    author = models.ForeignKey(User, on_delete=True) #글 작성 유저
