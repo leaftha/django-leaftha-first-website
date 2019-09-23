@@ -13,3 +13,7 @@ class Post(models.Model):
 
     def __str__(self): #포스터의 제목 결정
         return '{} :: {}'.format(self.title, self.author)
+
+
+    def get_absolute_url(self):
+        return '/blog/{}/'.format(self.pk)
