@@ -35,12 +35,11 @@ class Testview(TestCase):
         self.assertEqual(title.text, 'Blog')
 
         self.check_navbar(soup)
-        # navbar = soup.find('div', id='navbar')
-        #  self.assertIn('Blog', navbar.text)
-        #  self.assertIn('About me', navbar.text)
 
         self.assertEqual(Post.objects.count(), 0)
         self.assertIn('아직 게시물이 없습니다.', soup.body.text)
+
+
 
         post_000 = create_post(
             title='The first post',
@@ -78,3 +77,11 @@ class Testview(TestCase):
         self.assertEqual(title.text, '{} - Blog'.format((post_000.title)))
 
         self.check_navbar(soup)
+
+        body = soup.body
+
+        main_div = body.find('div', id = 'main_div')
+        self.assertIn(post_000.title, main_div.text)
+        self.assertIn(post_000.author.username, main_div.text)
+
+        self.assertIn(post_000.content, main_div.text)
