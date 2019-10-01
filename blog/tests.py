@@ -67,6 +67,13 @@ class Testview(TestCase):
         self.assertIn('Blog', navbar.text)
         self.assertIn('About me', navbar.text)
 
+    def check_right_side(self,soup):
+        category_card = soup.find('div', id='category-card')
+
+        self.assertIn('미분류 (1)', category_card.text)  # 미분류 (1)이 있어야한다.
+        self.assertIn('정치/사회 (1)', category_card.text)  # 정치/사회 (1) 있어야 함
+
+
     def test_post_list_no_post(self):
         response = self.client.get('/blog/')
         self.assertEqual(response.status_code, 200)
@@ -107,19 +114,24 @@ class Testview(TestCase):
 
 
         # category card 에서
-        category_card = body.find('div', id = 'category-card')
-        self.assertIn('미분류 (1)', category_card.text)   # 미분류 (1)이 있어야한다.
-        self.assertIn('정치/사회 (1)', category_card.text)   # 정치/사회 (1) 있어야 함
+        self.check_right_side(soup)
 
-        main_div = body.find('div', id ='main_div')
-        self.assertIn('정치/사회', main_div.text)   # 첫번째 포스트에는 정치/사회 있어야함
-        self.assertIn('미분류', main_div.text)   # 두번째 포스트에는 미분류 있어야함
+        main_div = soup.find('div', id='main_div')
+        self.assertIn('정치/사회', main_div.text)  # 첫번째 포스트에는 정치/사회 있어야함
+        self.assertIn('미분류', main_div.text)  # 두번째 포스트에는 미분류 있어야함
 
     def test_post_detail(self):
         post_000 = create_post(
             title='The first post',
             content='Hello World. We are the world',
             author=self.author_000,
+        )
+
+        post_001 = create_post(
+            title='The Second post',
+            content='Second Second Second',
+            author=self.author_000,
+            category=create_category(name='정치/사회'),
         )
 
 
@@ -145,3 +157,5 @@ class Testview(TestCase):
         self.assertIn(post_000.author.username, main_div.text)
 
         self.assertIn(post_000.content, main_div.text)
+
+        self.check_right_side(soup)

@@ -9,6 +9,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'categories'
 
 # Create your models here.
 class Post(models.Model):
