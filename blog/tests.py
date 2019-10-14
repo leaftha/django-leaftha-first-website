@@ -42,7 +42,7 @@ def create_post(title, content, author, category=None):
 class TestModel(TestCase):
     def setUp(self):
         self.client = Client()
-        self.author_000 = User.objects.create(username='leaftha', password='nopassworld')
+        self.author_000 = User.objects.create(username='leatha', password='nopassworld')
 
     def test_category(self):
         category = create_category()
@@ -102,7 +102,8 @@ class TestModel(TestCase):
 class Testview(TestCase):
     def setUp(self):
         self.client = Client()
-        self.author_000 = User.objects.create(username='leaftha', password='nopassworld')
+        self.author_000 = User.objects.create_user(username='leaftha', password='nopassworld')
+        self.user_obama = User.objects.create_user(username='obama', password='nopassworld')
 
     def check_navbar(self, soup):
         navbar = soup.find('div', id='navbar')
@@ -174,10 +175,12 @@ class Testview(TestCase):
 
 
     def test_post_detail(self):
+        category_plitics = create_category(name='정치/사회')
         post_000 = create_post(
             title='The first post',
             content='Hello World. We are the world',
             author=self.author_000,
+            category=category_plitics,
         )
 
         tag_america = create_tag(name='america')
@@ -188,7 +191,6 @@ class Testview(TestCase):
             title='The Second post',
             content='Second Second Second',
             author=self.author_000,
-            category=create_category(name='정치/사회'),
         )
 
 
@@ -219,6 +221,31 @@ class Testview(TestCase):
 
         # Tag
         self.assertIn('#america', main_div.text)  # Tag가 해당 post의 card마다 있다.
+
+        self.assertIn(category_plitics.name, main_div.text)# category사 main_div에 있다.
+        self.assertNotIn('EDIT', main_div.text)# EDIT버튼이 로그인 하지 않은 경우 보이지 않는다.
+
+        login_success = self.client.login(username='leaftha', password='nopassworld')# login을 한 경우에는
+        self.assertTrue(login_success)
+        response = self.client.get(post_000_url)
+        self.assertEqual(response.status_code, 200)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        main_div = soup.find('div', id = 'main-div')
+        self.assertEqual(post_000.author, self.author_000)# post.author와 login 한 사용자가 동일 하면
+        self.assertIn('EDIT', main_div.text)# DEIT 버튼 이 있다.
+
+        # 다름사람 경우 없다.
+        login_success = self.client.login(username='obama', password='nopassworld')  # login을 한 경우에는
+        self.assertTrue(login_success)
+        response = self.client.get(post_000_url)
+        self.assertEqual(response.status_code, 200)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        main_div = soup.find('div', id='main-div')
+        self.assertEqual(post_000.author, self.author_000)  # post.author와 login 한 사용자가 동일 하면
+        self.assertNotIn('EDIT', main_div.text)  # DEIT 버튼 이 있다.
+
 
 
     def test_post_list_by_category(self):
