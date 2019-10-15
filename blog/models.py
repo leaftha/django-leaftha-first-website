@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdown
 
 class Category(models.Model):
     name = models.CharField(max_length=25, unique=True)
@@ -31,7 +32,7 @@ class Tag(models.Model):
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=30) #제목 표시 글자수 제한 30글자
-    content = models.TextField() #글 내용
+    content = MarkdownxField() #글 내용
 
     head_image = models.ImageField(upload_to='blog/%Y/%m/%d/', blank=True)
 
@@ -40,7 +41,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=True) #글 작성 유저
 
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
 
     def __str__(self): #포스터의 제목 결정
         return '{} :: {}'.format(self.title, self.author)
@@ -48,3 +49,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return '/blog/{}/'.format(self.pk)
+
+    def get_markdown_content(self):
+        return markdown(self.content)
