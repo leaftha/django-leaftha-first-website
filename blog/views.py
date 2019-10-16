@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Post, Category, Tag
 # Create your views here.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 
 class PostList(ListView):
     model = Post
@@ -26,6 +26,12 @@ class PostDetail(DetailView):
         context['posts_without_category'] = Post.objects.filter(category=None).count()
 
         return context
+
+class PostUpdate(UpdateView):
+    model = Post
+    fields = [
+        'title', 'content', 'head_image', 'category', 'tags'
+    ]
 
 class PostListByTag(ListView):
     def get_queryset(self):

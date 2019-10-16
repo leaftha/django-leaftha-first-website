@@ -41,7 +41,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=True) #글 작성 유저
 
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
-    tags = models.ManyToManyField(Tag, null=True, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self): #포스터의 제목 결정
         return '{} :: {}'.format(self.title, self.author)
@@ -49,6 +49,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return '/blog/{}/'.format(self.pk)
+
+    def get_update_url(self):
+        return self.get_absolute_url() + 'update/'
 
     def get_markdown_content(self):
         return markdown(self.content)
