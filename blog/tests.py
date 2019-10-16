@@ -336,6 +336,10 @@ class Testview(TestCase):
 
     def test_post_create(self):
         response = self.client.get('/blog/create/')
+        self.assertNotEqual(response.status_code, 200)
+
+        self.client.login(username='leaftha', password='nopassworld')
+        response = self.client.get('/blog/create/')
         self.assertEqual(response.status_code, 200)
 
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -352,6 +356,8 @@ class Testview(TestCase):
         self.assertEqual(post_000.get_update_url(), post_000.get_absolute_url() + 'update/')
         response = self.client.get(post_000.get_update_url())
         self.assertEqual(response.status_code, 200)
+
+
 
         soup = BeautifulSoup(response.content, 'html.parser')
         main_div = soup.find('div', id = 'main-div')
