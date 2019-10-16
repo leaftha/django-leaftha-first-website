@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post, Category, Tag
 # Create your views here.
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 
 class PostList(ListView):
     model = Post
@@ -27,11 +27,28 @@ class PostDetail(DetailView):
 
         return context
 
+
+class PostCreate(CreateView):
+    model = Post
+    fields = [
+        'title', 'content', 'head_image', 'category', 'tags'
+    ]
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(type(self), self).form_valid(form)
+        else:
+            return redirect('/blog/')
+
+
 class PostUpdate(UpdateView):
     model = Post
     fields = [
         'title', 'content', 'head_image', 'category', 'tags'
     ]
+
 
 class PostListByTag(ListView):
     def get_queryset(self):

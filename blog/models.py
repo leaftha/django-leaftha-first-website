@@ -36,7 +36,7 @@ class Post(models.Model):
 
     head_image = models.ImageField(upload_to='blog/%Y/%m/%d/', blank=True)
 
-    created= models.DateTimeField() #글 작성 시간
+    created= models.DateTimeField(auto_now_add=True) #글 작성 시간 자동 채우기 기능 구현
 
     author = models.ForeignKey(User, on_delete=True) #글 작성 유저
 
