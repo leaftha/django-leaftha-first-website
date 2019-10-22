@@ -64,8 +64,8 @@
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
             {% if comment.author == request.user %}
-            <button class="btn btn-sm btn-infor float-right">edit</button>
-            <button class="btn btn-sm btn-warning float-right">delete</button>
+            <button type="button" class="btn btn-sm btn-outline-info float-right">edit</button>
+            <button type="button" class="btn btn-sm btn-outline-warning float-right">delete</button>
             {% endif %}
             <h5 class="mt-0">{{ comment.author }} <smail class="text-muted">{{ comment.created_at }}</smail></h5>
             {{ comment.get_markdown_content |safe }}
