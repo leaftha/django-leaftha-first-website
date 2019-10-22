@@ -221,7 +221,8 @@ class Testview(TestCase):
             category=category_plitics,
         )
 
-        comment_000 = create_comment(post_000, text='test comment', author= self.user_obama)
+        comment_000 = create_comment(post_000, text='test comment', author=self.user_obama)
+        comment_001 = create_comment(post_000, text='test comment', author=self.author_000)
 
         tag_america = create_tag(name='america')
         post_000.tags.add(tag_america)
@@ -291,7 +292,14 @@ class Testview(TestCase):
         self.assertEqual(post_000.author, self.author_000)  # post.author와 login 한 사용자가 동일 하면
         self.assertNotIn('EDIT', main_div.text)  # DEIT 버튼 이 있다.
 
+        comment_div = main_div.find('div', id='comment-list')
+        comment_000_div = comment_div.find('div', id='comment-id-{}'.format(comment_000.pk))
+        self.assertIn('edit', comment_000_div.text)
+        self.assertIn('delete', comment_000_div.text)
 
+        comment_001_div = comment_div.find('div', id='comment-id-{}'.format(comment_001.pk))
+        self.assertNotIn('edit', comment_001_div.text)
+        self.assertNotIn('delete', comment_001_div.text)
 
     def test_post_list_by_category(self):
         category_politics = create_category(name='정치/사회')
