@@ -105,11 +105,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <a roll="button" class="btn btn-primary" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>Log in with Google</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a roll="button" class="btn btn-outline-primary" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>  Log in with Google</a>
+                        <a roll="button" class="btn btn-outline-primary" href="/accounts/login"><i class="far fa-envelope"></i>  Log in with Email</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a roll="button" class="btn btn-outline-info" href="/accounts/signup"><i class="far fa-envelope"></i>  sign Up with Email</a>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
