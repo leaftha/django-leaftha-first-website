@@ -43,6 +43,9 @@ class Post(models.Model):
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag, blank=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self): #포스터의 제목 결정
         return '{} :: {}'.format(self.title, self.author)
 
