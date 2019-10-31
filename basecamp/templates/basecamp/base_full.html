@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Blog{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="{% static 'blog/CSS/bootstrap.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'blog/CSS/custom.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+</head>
+<body>
+{% include 'basecamp/navbar.html' %}
+
+
+{% block content %}
+{% endblock %}
+
+    <script src="{% static 'blog/javascrpit/jquery.min.js' %}"></script>
+    <script src="{% static 'blog/javascrpit/poper.min.js' %}"></script>
+    <script src="{% static 'blog/javascrpit/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/javascrpit/custom.js' %}"></script>
+</body>
+</html>
