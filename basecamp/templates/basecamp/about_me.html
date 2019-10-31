@@ -1,8 +1,28 @@
 {% extends 'basecamp/base_full.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container">
-    <h1>About Me</h1>
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="my-3">About Me</h1>
+            <h3 class="my-3">안녕하세요. 개발자 입니다.</h3>
+
+            <h5 class="my-3">새로운 일들을 기다리고 있습니다.</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis lacus quam, a consectetur ex ultrices nec. Donec sagittis, magna vitae molestie aliquet, sapien velit aliquam metus, non imperdiet justo dui id purus. Sed ut lacus ut purus pulvinar pharetra eu vitae quam. Donec mattis nulla lectus, rhoncus ullamcorper erat accumsan a. Proin varius sem id augue dictum, a rhoncus nulla commodo. Praesent id elit egestas, iaculis odio id, imperdiet ex. Duis at vestibulum lorem. Curabitur facilisis ipsum volutpat lacus semper condimentum. Proin gravida, magna in pellentesque accumsan, orci erat fermentum purus, eu convallis urna est feugiat odio.Donec vitae eros eget urna bibendum porta id vel justo. Vivamus lacinia porttitor neque placerat congue. Nam metus lectus, dapibus sit amet diam quis, scelerisque lacinia mauris. Ut mollis leo at nulla facilisis accumsan. Nullam gravida sit amet justo non viverra. Cras scelerisque arcu in mi facilisis lacinia. Integer viverra felis porta rhoncus sagittis. Vivamus aliquam malesuada nisl et varius. Nulla imperdiet, ligula id auctor gravida, risus elit aliquam massa, eget blandit dolor eros at nisl. Aliquam sed orci nec orci ornare molestie quis tempor dui. Donec at ornare turpis. Morbi semper metus lorem, nec maximus est fermentum vel. Nulla in lorem pretium, congue risus in, venenatis velit. In rhoncus tempus blandit. In lobortis interdum metus ac mattis. Duis hendrerit orci eu dolor pulvinar faucibus. Duis ac dolor pulvinar, sollicitudin mauris non, condimentum metus. Phasellus felis dui, tincidunt in vulputate a, finibus non dui. Quisque pellentesque, nisl nec bibendum eleifend, leo lorem cursus turpis, et suscipit ante sem sit amet urna. Suspendisse vestibulum nisi justo, sit amet mattis ipsum ultrices vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+       </div>
+        <div class="col-md">
+            <img class="img-fluid" src="{% static 'basecamp/images/skeleton-1456627_1280.png' %}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-fluid" src="{% static 'basecamp/images/skeleton-1456627_1280.png' %}"/>
+        </div>
+        <div class="col-md">
+            <h1 class="my-3">Contact me</h1>
+            <h3>Email: <small>vltpcks@gmail.com</small></h3>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
